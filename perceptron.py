@@ -1,4 +1,5 @@
 # coding:utf-8
+import csv
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
@@ -35,16 +36,41 @@ if __name__=='__main__':
   mu = 0.3 # 学習係数
   sita = 1 # バイアス成分
 
-  # AND関数のデータ(一番後ろの列はバイアス成分:1)
-  x1=np.array([[0,0],[0,1],[1,0]]) #クラス1(演算結果が0)の行列生成
-  x2=np.array([[1,1]]) # クラス2(演算結果が1)の行列生成
+# AND関数のデータ(一番後ろの列はバイアス成分:1)
+  with open("./csv/data.csv") as f:
+    reader = csv.reader(f)
+    header = next(reader)
+    x1_1 = np.array([])
+    x1_2 = np.array([])
+    x2_1 = np.array([])
+    x2_2 = np.array([])
+    x1f = np.array([])
+    x2f = np.array([])
+    cnt = 1
+    for row in reader:
+  	  if 0<cnt<=15:
+	    x1_1 = np.append(x1_1,row[0])
+	    x1_2 = np.append(x1_2,row[1])
+	  if 15<cnt<=30:
+	    x2_1 = np.append(x2_1,row[0])
+   	    x2_2 = np.append(x2_2,row[1])
+	  else:
+	    "error"
+	    cnt += 1
+
+  x1_1=np.array(x1_1,dtype=float)
+  x1_2=np.array(x1_2,dtype=float)
+  x2_1=np.array(x2_1,dtype=float)
+  x2_2=np.array(x2_2,dtype=float)
+  x1=np.c_[x1_1,x1_2]
+  x2=np.c_[x2_1,x2_2]
   bias = np.array([sita for i in range(len(x1))])
   x1 = np.c_[x1,bias] #バイアスをクラス1のデータ最後尾に連結
   bias = np.array([sita for i in range(len(x2))])
   x2 = np.c_[x2,bias] #バイアスをクラス2のデータ最後尾に連結
   class_x = np.r_[x1,x2] # 行列の連結
 
-  t = [-1,-1,-1,1] # AND関数のラベル
+  t = [-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1.-1,-1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1] # AND関数のラベル
   # o:出力を求める
   o=[]
   while t != o:
